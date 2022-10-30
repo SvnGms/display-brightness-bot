@@ -21,6 +21,7 @@ config.json = {
   "characteristic_line": [[0,1],[60, 1],[120, 1],[360, 10],[420, 13],[480, 16],[600, 85],[720, 100], [840, 100],[1020, 15],[1440, 5]]
 }
 ```
+(currently linear interpolation is used, the characteristic curved is being sampled for each minute of a day - that should be more than enough in precision)
 
 edit the ```characteristic_line``` list of x,y datapoints to enable a different characteristic curve. Syntax of the datapoints: ```[<minute of day>,<display_brightness_percentage>]```
 
@@ -37,3 +38,4 @@ Any contribution is appreciated. Implement new Display Support, or improve chara
 3. Include similar display API's for different manufacturers
 4. Setup as a windows service, to run in background?
 5. Include different OS support?
+6. Change to a better interpolation method, than linear?
