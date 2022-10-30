@@ -10,6 +10,7 @@ Define a characteristic curve over a whole day, this tool will automatically set
 
 ## First Usage
 Define a characteristic curve. Start the app with a python interpreter python main.py.
+![characteristic curve]("characteristic_curve_example.png")
 
 ## Disclaimer
 This is a side project for my own convienience, I was often changing display brightness during the day. Do not expect fixes regularly. If something breaks, please fix and create a pull request. Any contribution is appreciated.
