@@ -71,7 +71,7 @@ def set_brightness(config, brightness_percentage):
 
 @click.command()
 @click.option('--interval', default=1, help='update interval in minutes')
-@click.option('--showgraph', default=True, help='start with interpolation graph')
+@click.option('--showgraph', default=False, help='start with interpolation graph')
 def main(interval, showgraph):
     click.echo('Hello World!')
 
@@ -90,8 +90,8 @@ def main(interval, showgraph):
     while True:
         now = time.localtime()
         minute_of_day = now.tm_hour * 60 + now.tm_min
-        set_brightness(config, f_x[minute_of_day])
-        print(time.strftime("%x  %H:%M:%S", now), "Brightness set to: ", f_x[minute_of_day])
+        set_brightness(config, int(f_x[minute_of_day]))
+        print(time.strftime("%x  %H:%M:%S", now), "Brightness set to: ", int(f_x[minute_of_day]), '%')
         time.sleep(interval * 60)
 
 
