@@ -8,6 +8,9 @@ Working Installation of the [dell display manager](https://www.google.com/search
 ## Features
 Define a characteristic curve over a whole day, this tool will automatically set the brightness to the selected values
 
+## First Usage
+Define a characteristic curve. Start the app with a python interpreter python main.py.
+
 ## Disclaimer
 This is a side project for my own convienience, I was often changing display brightness during the day. Do not expect fixes regularly. If something breaks, please fix and create a pull request. Any contribution is appreciated.
 
