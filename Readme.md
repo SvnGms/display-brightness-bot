@@ -22,7 +22,7 @@ config.json = {
 }
 ```
 
-edit the characteristic_line to enable a different characteristic curve. Syntax of the datapoints: ```[<minute of day>,<display_brightness_percentage>]```
+edit the ```characteristic_line``` list of x,y datapoints to enable a different characteristic curve. Syntax of the datapoints: ```[<minute of day>,<display_brightness_percentage>]```
 
 4. Start the app with a python interpreter: ```python main.py```
 
