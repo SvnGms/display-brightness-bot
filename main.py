@@ -14,7 +14,8 @@ import numpy as np
 """
 default_json = {
     "ddm_path": "C:\\Program Files (x86)\\Dell\\Dell Display Manager\\ddm.exe",
-    "characteristic_line": [[1440, 5], [840, 100]],
+    "characteristic_line": [[0, 1], [60, 1], [120, 1], [360, 10], [420, 13], [480, 16], [600, 85], [720, 100],
+                            [840, 100], [1020, 15], [1440, 5]],
 }
 
 
@@ -56,6 +57,8 @@ def interpolate_characteristic_line(config, showgraph):
     if showgraph:
         plt.plot(x, y, 'o', xnew, f(xnew), '-', xnew, f2(xnew), '--', xnew2, ynew2, ':')
         plt.legend(['data', 'linear', 'cubic', 'spline'], loc='best')
+        plt.xlabel('minute of day')
+        plt.ylabel('brightness percentage')
         plt.show()
 
     # use linear interpolation for now, as it provides the minimal gap between 24:00 and 0:00, if configured okay
