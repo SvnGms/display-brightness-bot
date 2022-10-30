@@ -15,13 +15,16 @@ Define a characteristic curve over a whole day, this tool will automatically set
 
 ![characteristic curve example](https://github.com/SvnGms/display-bightness-bot/blob/main/characteristic_curve_example.jpg?raw=true)
 
+(currently linear interpolation is used, the characteristic curved is being sampled for each minute of a day - that should be more than enough in precision)
+
+This is an example ```config.json``` file:
 ```
-config.json = {
+{
   "ddm_path": "C:\\Program Files (x86)\\Dell\\Dell Display Manager\\ddm.exe",
   "characteristic_line": [[0,1],[60, 1],[120, 1],[360, 10],[420, 13],[480, 16],[600, 85],[720, 100], [840, 100],[1020, 15],[1440, 5]]
 }
 ```
-(currently linear interpolation is used, the characteristic curved is being sampled for each minute of a day - that should be more than enough in precision)
+
 
 edit the ```characteristic_line``` list of x,y datapoints to enable a different characteristic curve. Syntax of the datapoints: ```[<minute of day>,<display_brightness_percentage>]```
 
