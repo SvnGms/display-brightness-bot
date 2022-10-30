@@ -13,7 +13,7 @@ Define a characteristic curve. Start the app with a python interpreter python ma
 ![characteristic curve]("characteristic_curve_example.png")
 
 ## Disclaimer
-This is a side project for my own convienience, I was often changing display brightness during the day. Do not expect fixes regularly. If something breaks, please fix and create a pull request. Any contribution is appreciated.
+This is a side project for my own convenience, I was often changing display brightness during the day. Do not expect fixes regularly. If something breaks, please fix and create a pull request. Any contribution is appreciated.
 
 ## Collaboration
 Any contribution is appreciated. Implement new Display Support, or improve characteristic curve generation
