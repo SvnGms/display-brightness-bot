@@ -11,7 +11,7 @@ Define a characteristic curve over a whole day, this tool will automatically set
 ## First Usage
 Define a characteristic curve. Start the app with a python interpreter python main.py.
 ![characteristic curve]("characteristic_curve_example.png")
-![characteristic curve example](https://https://github.com/SvnGms/display-bightness-bot/edit/main/characteristic_curve_example.jpg?raw=true)
+![characteristic curve example](https://https://github.com/SvnGms/display-bightness-bot/blob/main/characteristic_curve_example.jpg?raw=true)
 
 ## Disclaimer
 This is a side project for my own convenience, I was often changing display brightness during the day. Do not expect fixes regularly. If something breaks, please fix and create a pull request. Any contribution is appreciated.
