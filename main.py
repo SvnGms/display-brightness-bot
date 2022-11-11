@@ -1,6 +1,9 @@
+import pathlib
+
 import click
 import time
 import json
+import sys
 from pathlib import Path
 import subprocess
 from scipy.interpolate import interp1d
@@ -46,10 +49,17 @@ def interpolate_characteristic_line(config, showgraph):
         ToDo: Use periodic interpolation to eliminate the gap at 24h
     """
     minutes_of_day = 24 * 60
+
+    # Sort list
     l = config["characteristic_line"]
     l.sort(key=lambda x: x[0])
     result = list(map(list, zip(*l)))
     x, y = result
+
+    x.append(1440)
+    y.append(y[len(y)-1])
+    x.insert(0,0)
+    y.insert(0,y[len(y)-1])
 
     f = interp1d(x, y)
     f2 = interp1d(x, y, kind='cubic')
@@ -68,7 +78,13 @@ def interpolate_characteristic_line(config, showgraph):
         plt.legend(['data', 'linear', 'cubic', 'spline'], loc='best')
         plt.xlabel('hour')
         plt.ylabel('brightness percentage')
-        plt.show()
+        image_filename = 'characteristic_curve.png'
+        plt.savefig(image_filename)
+        plt.close()
+        imageViewerFromCommandLine = {'linux': 'xdg-open',
+                                      'win32': 'explorer',
+                                      'darwin': 'open'}[sys.platform]
+        subprocess.run([imageViewerFromCommandLine, pathlib.Path(image_filename)])
 
     # use linear interpolation for now, as it provides the minimal gap between 24:00 and 0:00, if configured okay
     return x_samples, f(x_samples)
@@ -91,7 +107,8 @@ def wait_for_next_interpolation_step(interval):
 
 
 def min_of_day(datetime: datetime):
-    return int(datetime.hour*60 + datetime.minute)
+    return int(datetime.hour * 60 + datetime.minute)
+
 
 def generate_characteristic_curve_based_on_sunset_sunrise():
     g = geocoder.ip('me')
@@ -103,14 +120,21 @@ def generate_characteristic_curve_based_on_sunset_sunrise():
     city = LocationInfo(g.city, g.state, str(time_zone), 51.5, -0.116)
     sun_info = sun(city.observer, date=datetime.datetime.today())
 
-    characteristic_line = [[min_of_day(sun_info["dawn"]), 5], [min_of_day(sun_info["sunrise"]), 25], [min_of_day(sun_info["sunrise"])+120, 100], [min_of_day(sun_info["noon"]), 100], [min_of_day(sun_info["sunset"])-120, 100], [min_of_day(sun_info["sunset"]), 25], [min_of_day(sun_info["dusk"]), 5]]
+    characteristic_line = [[min_of_day(sun_info["dawn"]), 10],
+                           [min_of_day(sun_info["sunrise"]), 25],
+                           [min_of_day(sun_info["sunrise"]) + 120, 100],
+                           [min_of_day(sun_info["noon"]), 100],
+                           [min_of_day(sun_info["sunset"]) - 120, 100],
+                           [min_of_day(sun_info["sunset"]), 20],
+                           [min_of_day(sun_info["dusk"]), 10]]
     return characteristic_line
 
 
 @click.command()
 @click.option('--interval', default=1, help='update interval in minutes')
 @click.option('--showgraph', default=False, help='start with interpolation graph')
-@click.option('--chracteristic_line', default='sunset', help='characteristic curve to use: "config" for  custom config, "sunset" for calculation based on sunset/sunrise')
+@click.option('--chracteristic_line', default='sunset',
+              help='characteristic curve to use: "config" for  custom config, "sunset" for calculation based on sunset/sunrise')
 def main(interval, showgraph, chracteristic_line):
     click.echo('Hello World!')
 
@@ -126,10 +150,9 @@ def main(interval, showgraph, chracteristic_line):
 
     if chracteristic_line == "sunset":
         c_line = generate_characteristic_curve_based_on_sunset_sunrise()
-        config['characteristic_line']
+        del config['characteristic_line']
+        config['characteristic_line'] = c_line
     x, f_x = interpolate_characteristic_line(config, showgraph)
-
-
 
     # run brightness scheduler here
     while True:
